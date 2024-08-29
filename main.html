@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fibonacci Number</title>
+    <title>Second Highest Element</title>
 </head>
 <body>
-    <h1>Find the nth Fibonacci Number</h1>
+    <h1>Find the Second Highest Element in an Array</h1>
 
     <script>
-        // Function to find the nth Fibonacci number
-        function fibonacci(num) {
-            if (num === 0) return 0;
-            if (num === 1) return 1;
-            
-            let a = 0, b = 1, result = 0;
-            for (let i = 2; i <= num; i++) {
-                result = a + b;
-                a = b;
-                b = result;
+        // Function to find the second highest element in the array
+        function secondHighest(arr) {
+            if (arr.length < 2) {
+                return -Infinity;
             }
-            return result;
+
+            let max = -Infinity;
+            let secondMax = -Infinity;
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] > max) {
+                    secondMax = max;
+                    max = arr[i];
+                } else if (arr[i] > secondMax && arr[i] < max) {
+                    secondMax = arr[i];
+                }
+            }
+
+            return secondMax === -Infinity ? -Infinity : secondMax;
         }
 
         // Test cases to verify the function
-        console.log(fibonacci(1));  // Output: 0
-        console.log(fibonacci(5));  // Output: 3
-        console.log(fibonacci(10)); // Output: 34
-        console.log(fibonacci(0));  // Output: 0
-        console.log(fibonacci(7));  // Output: 13
+        console.log(secondHighest([5, 1, 2, 3, 4])); // Output: 4
+        console.log(secondHighest([-1, -2, -3, -4, -5])); // Output: -2
+        console.log(secondHighest([])); // Output: -Infinity
+        console.log(secondHighest([1])); // Output: -Infinity
+        console.log(secondHighest([1, 1, 1, 1, 1])); // Output: -Infinity
     </script>
 </body>
 </html>
