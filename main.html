@@ -12,70 +12,58 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
         }
         .container {
             text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         input {
-            padding: 10px;
+            padding: 8px;
             margin: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
         }
         button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             font-size: 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Fibonacci Calculator</h1>
-        <p>Enter a number to find the corresponding Fibonacci number:</p>
-        <input type="number" id="fibonacciInput" min="0" max="50" placeholder="Enter a number" required>
-        <br>
-        <button onclick="calculateFibonacci()">Calculate</button>
-        <p id="result"></p>
+        <input type="number" id="fibInput" min="0" placeholder="Enter a number" />
+        <button onclick="calculateFibonacci()">Get Fibonacci</button>
+        <div class="result" id="fibResult"></div>
     </div>
 
     <script>
-        function calculateFibonacci() {
-            const num = parseInt(document.getElementById('fibonacciInput').value);
-            if (isNaN(num) || num < 0 || num > 50) {
-                document.getElementById('result').textContent = 'Please enter a number between 0 and 50.';
-                return;
-            }
+        function fibonacci(num) {
+            if (num === 0) return 0;
+            if (num === 1) return 1;
 
-            let a = 0, b = 1, temp;
-            if (num === 0) {
-                document.getElementById('result').textContent = 'Fibonacci(0) = 0';
-                return;
-            } else if (num === 1) {
-                document.getElementById('result').textContent = 'Fibonacci(1) = 1';
-                return;
-            }
-
+            let a = 0, b = 1;
             for (let i = 2; i <= num; i++) {
-                temp = a + b;
+                let temp = a;
                 a = b;
-                b = temp;
+                b = temp + b;
+            }
+            return b;
+        }
+
+        function calculateFibonacci() {
+            const input = document.getElementById('fibInput').value;
+            const num = parseInt(input, 10);
+            
+            if (isNaN(num) || num < 0) {
+                document.getElementById('fibResult').textContent = 'Please enter a valid positive integer.';
+                return;
             }
 
-            document.getElementById('result').textContent = `Fibonacci(${num}) = ${b}`;
+            const result = fibonacci(num);
+            document.getElementById('fibResult').textContent = `Fibonacci(${num}) = ${result}`;
         }
     </script>
 </body>
